@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bois Noble - Meubles Artisanaux en Bois Massif</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary-color: #8B4513;
+      --secondary-color: #D2B48C;
+      --accent-color: #A52A2A;
+      --light-color: #F5F5DC;
+      --dark-color: #3D2B1F;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      line-height: 1.6;
+      color: #333;
+      background-color: #f9f9f9;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    /* Header */
+    header {
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-color);
+    }
+
+    .nav-links a.active {
+      color: var(--primary-color);
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--primary-color);
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80');
+      background-size: cover;
+      background-position: center;
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .btn:hover {
+      background-color: var(--accent-color);
+      transform: translateY(-3px);
+    }
+
+    /* Section */
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    .section-title p {
+      color: #666;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Filtres */
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 8px 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    /* Produits */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: var(--accent-color);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      z-index: 2;
+    }
+
+    .product-image {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .product-card:hover .product-image img {
+      transform: scale(1.1);
+    }
+
+    .product-info {
+      padding: 20px;
+    }
+
+    .product-info h3 {
+      margin-bottom: 10px;
+      color: var(--dark-color);
+    }
+
+    .product-info p {
+      color: #666;
+      margin-bottom: 15px;
+      font-size: 0.95rem;
+    }
+
+    .product-price {
+      font-weight: bold;
+      color: var(--accent-color);
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 1rem;
+    }
+
+    .view-details {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+    }
+
+    .view-details:hover {
+      background-color: var(--accent-color);
+      transform: translateY(-2px);
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 2000;
+      overflow-y: auto;
+      padding: 50px 0;
+    }
+
+    .modal-content {
+      background-color: white;
+      max-width: 900px;
+      margin: 0 auto;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 24px;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.5);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: var(--transition);
+    }
+
+    .close-modal:hover {
+      background-color: var(--accent-color);
+    }
+
+    .modal-body {
+      padding: 40px;
+    }
+
+    .modal-product {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .modal-image {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .modal-image img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .modal-details {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .modal-details h2 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    .modal-price {
+      font-size: 1.5rem;
+      color: var(--accent-color);
+      font-weight: bold;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .modal-old-price {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 1.2rem;
+    }
+
+    .modal-description {
+      margin-bottom: 30px;
+      line-height: 1.8;
+    }
+
+    .product-specs {
+      margin-bottom: 30px;
+    }
+
+    .spec-item {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    .spec-label {
+      font-weight: bold;
+      min-width: 120px;
+      color: var(--dark-color);
+    }
+
+    /* Contact Section */
+    #contact {
+      background: linear-gradient(to bottom, #f9f9f9, #f0f0f0);
+      padding: 80px 0;
+    }
+
+    .contact-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      border: 1px solid rgba(200, 180, 140, 0.2);
+    }
+
+    .contact-icon {
+      background: var(--light-color);
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 25px;
+      color: var(--primary-color);
+      font-size: 1.8rem;
+      box-shadow: 0 5px 15px rgba(139, 69, 19, 0.1);
+    }
+
+    .contact-card h3 {
+      color: var(--dark-color);
+      margin-bottom: 30px;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--dark-color);
+      font-size: 0.95rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background-color: #fff;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.15);
+      transform: translateY(-1px);
+    }
+
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--dark-color);
+      color: white;
+      padding: 60px 0 30px;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-column {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .footer-column h3 {
+      margin-bottom: 20px;
+      color: var(--secondary-color);
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      color: #ccc;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--secondary-color);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      background-color: var(--primary-color);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      text-align: center;
+      color: #aaa;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .section {
+        padding: 60px 0;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-card {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <nav class="navbar">
+        <a href="#" class="logo"><i class="fas fa-chair"></i> Bois Noble</a>
+        <ul class="nav-links">
+          <li><a href="#" class="active">Accueil</a></li>
+          <li><a href="#products">Collection</a></li>
+          <li><a href="promotions.html">Promotions</a></li>
+          <li><a href="#about">À propos</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="hamburger"><i class="fas fa-bars"></i></div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Meubles en Bois Massif</h1>
+      <p>Artisanat tunisien – Durabilité, Élégance, Authenticité</p>
+      <a href="#products" class="btn">Découvrir la collection</a>
+    </div>
+  </section>
+
+  <!-- Produits -->
+  <section class="section" id="products">
+    <div class="container">
+      <div class="section-title">
+        <h2>Notre Collection</h2>
+        <p>Meubles artisanaux – Prix en DT (Dinar Tunisien)</p>
+      </div>
+
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">Tous</button>
+        <button class="filter-btn" data-filter="salon">Salon</button>
+        <button class="filter-btn" data-filter="chambre">Chambre</button>
+        <button class="filter-btn" data-filter="bureau">Bureau</button>
+        <button class="filter-btn" data-filter="salle-manger">Salle à manger</button>
+      </div>
+
+      <div class="products-grid">
+        <!-- Produit 1 -->
+        <div class="product-card" data-category="salon">
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Canapé Riviera">
+          </div>
+          <div class="product-info">
+            <h3>Canapé Riviera</h3>
+            <p>Canapé trois places en chêne massif, assise lin naturel</p>
+            <div class="product-price">6 200 DT</div>
+            <button class="view-details" data-id="1">Voir détails</button>
+          </div>
+        </div>
+
+        <!-- Produit 2 -->
+        <div class="product-card" data-category="chambre">
+          <div class="product-badge">Best Seller</div>
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Lit Athéna">
+          </div>
+          <div class="product-info">
+            <h3>Lit Athéna</h3>
+            <p>Lit double en noyer massif, tête rembourrée</p>
+            <div class="product-price">4 850 DT</div>
+            <button class="view-details" data-id="2">Voir détails</button>
+          </div>
+        </div>
+
+        <!-- Produit 3 -->
+        <div class="product-card" data-category="bureau">
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Bureau Élysée">
+          </div>
+          <div class="product-info">
+            <h3>Bureau Élysée</h3>
+            <p>Bureau en hêtre massif, tiroirs intégrés</p>
+            <div class="product-price">2 980 DT</div>
+            <button class="view-details" data-id="3">Voir détails</button>
+          </div>
+        </div>
+
+        <!-- Produit 4 -->
+        <div class="product-card" data-category="salle-manger">
+          <div class="product-badge">-20%</div>
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1598301257982-0cf01499abb2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Table Gaston">
+          </div>
+          <div class="product-info">
+            <h3>Table Gaston</h3>
+            <p>Table extensible en chêne massif, 6-10 places</p>
+            <div class="product-price">
+              <span class="old-price">6 900 DT</span>
+              <span>5 520 DT</span>
+            </div>
+            <button class="view-details" data-id="4">Voir détails</button>
+          </div>
+        </div>
+      </div>
+	  <div style="text-align: center; margin-top: 30px;">
+                        <a href="articles.html" class="btn">Voir toutes les Articles</a>
+                    </div>
+    </div>
+  </section>
+
+  <!-- Modal Détails -->
+  <div class="modal" id="productModal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div class="modal-body">
+        <div class="modal-product">
+          <div class="modal-image">
+            <img id="modalImg" src="" alt="">
+          </div>
+          <div class="modal-details">
+            <h2 id="modalTitle"></h2>
+            <div class="modal-price">
+              <span id="modalPrice"></span>
+              <span id="modalOldPrice" class="modal-old-price"></span>
+            </div>
+            <p class="modal-description" id="modalDescription"></p>
+            <div class="product-specs">
+              <h3>Caractéristiques</h3>
+              <div class="spec-item"><span class="spec-label">Dimensions:</span><span id="modalDimensions"></span></div>
+              <div class="spec-item"><span class="spec-label">Matériau:</span><span id="modalMaterial"></span></div>
+              <div class="spec-item"><span class="spec-label">Style:</span><span id="modalStyle"></span></div>
+              <div class="spec-item"><span class="spec-label">Couleur:</span><span id="modalColor"></span></div>
+            </div>
+            <button class="btn" onclick="window.location.href='#contact'">Demander un devis</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="section-title">
+        <h2>Parlons de votre projet</h2>
+        <p>Nous sommes à votre disposition pour toute question ou visite</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="name">Nom complet *</label>
+            <input type="text" id="name" class="form-control" placeholder="Mohamed Ali" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" class="form-control" placeholder="mohamed@exemple.tn" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">Téléphone (optionnel)</label>
+            <input type="tel" id="phone" class="form-control" placeholder="+216 21 234 567" />
+          </div>
+          <div class="form-group">
+            <label for="message">Votre projet ou question *</label>
+            <textarea id="message" class="form-control" rows="5" placeholder="Je souhaite un buffet en chêne massif..." required></textarea>
+          </div>
+          <button type="submit" class="btn">Envoyer le message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>Bois Noble</h3>
+          <p>Fabricant artisanal de meubles en bois massif depuis 2001. Notre engagement : qualité, durabilité et esthétique.</p>
+        </div>
+        <div class="footer-column">
+          <h3>Liens rapides</h3>
+          <ul class="footer-links">
+            <li><a href="#">Accueil</a></li>
+            <li><a href="#products">Collection</a></li>
+            <li><a href="promotions.html">Promotions</a></li>
+            <li><a href="#about">À propos</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Contact</h3>
+          <ul class="footer-links">
+            <li><i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com/maps/place/Sidi+Bouzid,+Tunisie" target="_blank" style="color: #ccc; text-decoration: underline;">Sidi Bouzid, Tunisie</a></li>
+            <li><i class="fas fa-phone"></i> +216 71 123 456</li>
+            <li><i class="fas fa-mobile-alt"></i> +216 98 765 432 </li>
+            <li><i class="fas fa-envelope"></i> contact@boisnoble.tn</li>
+            <li><i class="fas fa-clock"></i> Lun-Ven : 8h30 - 17h</li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 Bois Noble - Tous droits réservés</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    // Données des produits
+    const products = {
+      1: {
+        title: "Canapé Riviera",
+        price: "6 200 DT",
+        image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        description: "Canapé trois places en chêne massif français, avec structure apparente et assise en lin naturel. Conçu pour durer plusieurs générations.",
+        dimensions: "220 x 95 x 85 cm",
+        material: "Chêne massif, lin naturel",
+        style: "Contemporain",
+        color: "Chêne naturel"
+      },
+      2: {
+        title: "Lit Athéna",
+        price: "4 850 DT",
+        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        description: "Lit double en noyer massif avec tête de lit rembourrée en velours. Un mélange parfait de luxe et de tradition artisanale.",
+        dimensions: "160 x 200 x 110 cm",
+        material: "Noyer massif, velours",
+        style: "Luxueux",
+        color: "Noyer foncé"
+      },
+      3: {
+        title: "Bureau Élysée",
+        price: "2 980 DT",
+        image: "https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        description: "Bureau fonctionnel en hêtre massif avec tiroirs intégrés et finition naturelle. Idéal pour un espace de travail élégant et durable.",
+        dimensions: "140 x 70 x 75 cm",
+        material: "Hêtre massif",
+        style: "Moderne",
+        color: "Naturel"
+      },
+      4: {
+        title: "Table Gaston",
+        price: "5 520 DT",
+        oldPrice: "6 900 DT",
+        image: "https://images.unsplash.com/photo-1598301257982-0cf01499abb2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        description: "Table extensible en chêne massif, pouvant accueillir 6 à 10 personnes. Parfaite pour les grandes familles ou les dîners entre amis.",
+        dimensions: "160-240 x 90 x 76 cm",
+        material: "Chêne massif",
+        style: "Rustique",
+        color: "Chêne cérusé"
+      }
+    };
+
+    // Menu mobile
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    if (hamburger) {
+      hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+      });
+    }
+
+    // Filtres
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const productCards = document.querySelectorAll('.product-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.getAttribute('data-filter');
+
+        productCards.forEach(card => {
+          if (filter === 'all' || card.getAttribute('data-category') === filter) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Modals
+    const viewDetailsBtns = document.querySelectorAll('.view-details');
+    const modal = document.getElementById('productModal');
+    const closeModal = document.querySelector('.close-modal');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalOldPrice = document.getElementById('modalOldPrice');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalDimensions = document.getElementById('modalDimensions');
+    const modalMaterial = document.getElementById('modalMaterial');
+    const modalStyle = document.getElementById('modalStyle');
+    const modalColor = document.getElementById('modalColor');
+
+    viewDetailsBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        const product = products[id];
+        if (product) {
+          modalImg.src = product.image;
+          modalTitle.textContent = product.title;
+          modalPrice.textContent = product.price;
+          modalOldPrice.textContent = product.oldPrice || '';
+          modalOldPrice.style.display = product.oldPrice ? 'inline' : 'none';
+          modalDescription.textContent = product.description;
+          modalDimensions.textContent = product.dimensions;
+          modalMaterial.textContent = product.material;
+          modalStyle.textContent = product.style;
+          modalColor.textContent = product.color;
+          modal.style.display = 'block';
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    });
+
+    closeModal.addEventListener('click', () => {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    // Formulaire de contact
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Merci pour votre message ! Nous vous répondrons sous 24h.');
+      this.reset();
+    });
+  </script>
+</body>
+</html>
